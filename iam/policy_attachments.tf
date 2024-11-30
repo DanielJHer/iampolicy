@@ -4,7 +4,7 @@ resource "aws_iam_group_policy_attachment" "developers_mfa" {
     policy_arn = aws_iam_policy.enforce_mfa.arn
 }
 
-resource "aws_iam_group_policy_attachment" 'operations_mfa" {
+resource "aws_iam_group_policy_attachment" "operations_mfa" {
     group = aws_iam_group.operations_group.name
     policy_arn = aws_iam_policy.enforce_mfa.arn
 }

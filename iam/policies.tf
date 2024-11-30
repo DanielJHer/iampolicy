@@ -9,7 +9,7 @@ resource "aws_iam_policy" "enforce_mfa" {
             {
                 Effect = "Deny",
                 Action = "*",
-                Resource "*",
+                Resource = "*",
                 Condition = {
                     Bool: {
                         "aws:MultiFactorAuthPresent": "false"
@@ -43,9 +43,9 @@ resource "aws_iam_policy" "developers_policy" {
             {
                 Effect = "Allow"
                 Action = [
-                    "ec2:DescribeInstances"
-                    "ec2:StartInstances"
-                    "ec2:StopInstances"
+                    "ec2:DescribeInstances",
+                    "ec2:StartInstances",
+                    "ec2:StopInstances",
                     "ec2:RebootInstances"
                 ],
                 Resource = "*"
@@ -53,8 +53,8 @@ resource "aws_iam_policy" "developers_policy" {
             {
                 Effect = "Allow"
                 Action = [
-                    "s3:ListBucket"
-                    "s3:GetObject"
+                    "s3:ListBucket",
+                    "s3:GetObject",
                     "s3:PutObject"
                 ],
                 Resource = "*"
@@ -90,8 +90,8 @@ resource "aws_iam_policy" "operations_policy" {
             {
                 Effect = "Allow",
                 Action = [
-                    "ssm:*"
-                    "ssm-contacts:*"
+                    "ssm:*",
+                    "ssm-contacts:*",
                     "ssm-incidents:*"
                 ],
                 Resource = "*"
@@ -128,7 +128,7 @@ resource "aws_iam_policy" "finance_policy" {
                     "budgets:*"
                 ],
                 Resource = "*"
-            }
+            },
             {
                 Effect = "Allow",
                 Action = [
@@ -174,10 +174,9 @@ resource "aws_iam_policy" "analysts_policy" {
                 Effect: "Allow",
                 Action = [
                     "logs:GetLogEvents"
-                ]
-            },
-            Resource = "*"
-
+                ],
+                Resource = "*"
+            }
         ]
     })
 }
