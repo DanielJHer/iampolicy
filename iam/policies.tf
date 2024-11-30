@@ -1,16 +1,16 @@
 # Enforce MFA for all accounts
 resource "aws_iam_policy" "enforce_mfa" {
     name = "EnforceMFA"
-    description = "Deny access to all actions unless MFA is enabled:"
+    description = "Deny access to all actions unless MFA is enabled"
 
     policy = jsonencode({
-        Version = "2012-20-17"
+        Version = "2012-10-17"
         Statement = [
             {
-                Effect = "Deny",
-                Action = "*",
-                Resource = "*",
-                Condition = {
+                Effect: "Deny",
+                Action: "*",
+                Resource: "*",
+                Condition: {
                     Bool: {
                         "aws:MultiFactorAuthPresent": "false"
                     }
@@ -41,32 +41,32 @@ resource "aws_iam_policy" "developers_policy" {
         Version = "2012-10-17"
         Statement = [
             {
-                Effect = "Allow"
-                Action = [
+                Effect: "Allow"
+                Action: [
                     "ec2:DescribeInstances",
                     "ec2:StartInstances",
                     "ec2:StopInstances",
                     "ec2:RebootInstances"
                 ],
-                Resource = "*"
+                Resource: "*"
             },
             {
-                Effect = "Allow"
-                Action = [
+                Effect: "Allow"
+                Action: [
                     "s3:ListBucket",
                     "s3:GetObject",
                     "s3:PutObject"
                 ],
-                Resource = "*"
+                Resource: "*"
             },
             {
-                Effect = "Allow"
-                Action = [
+                Effect: "Allow"
+                Action: [
                     "logs:DescribeLogGroups",
                     "logs:DescribeLogStreams",
                     "logs:GetLogEvents"
                 ],
-                Resource = "*"
+                Resource: "*"
             }
         ]
     })
@@ -81,27 +81,27 @@ resource "aws_iam_policy" "operations_policy" {
         Version = "2012-10-17"
         Statement = [
             {
-                Effect = "Allow",
-                Action = [
+                Effect: "Allow",
+                Action: [
                     "ec2:*"
                 ],
-                Resource = "*"
+                Resource: "*"
             },
             {
-                Effect = "Allow",
-                Action = [
+                Effect: "Allow",
+                Action: [
                     "ssm:*",
                     "ssm-contacts:*",
                     "ssm-incidents:*"
                 ],
-                Resource = "*"
+                Resource: "*"
             },
             {
-                Effect = "Allow",
-                Action = [
+                Effect: "Allow",
+                Action: [
                     "rds:*"
                 ],
-                Resource = "*"
+                Resource: "*"
             }
         ]
     })
@@ -110,35 +110,35 @@ resource "aws_iam_policy" "operations_policy" {
 # Permissions for Finance policy
 resource "aws_iam_policy" "finance_policy" {
     name = "FinancePolicy"
-    Description = "Finance permission for Cost Explorer, AWS Budgets, and Read-only access"
+    description = "Finance permission for Cost Explorer, AWS Budgets, and Read-only access"
 
     policy = jsonencode({
         Version = "2012-10-17"
         Statement = [
             {
-                Effect = "Allow",
-                Action = [
+                Effect: "Allow",
+                Action: [
                     "ce:*"
                 ],
-                Resource = "*"
+                Resource: "*"
             },
             {
-                Effect = "Allow",
-                Action = [
+                Effect: "Allow",
+                Action: [
                     "budgets:*"
                 ],
-                Resource = "*"
+                Resource: "*"
             },
             {
-                Effect = "Allow",
-                Action = [
+                Effect: "Allow",
+                Action: [
                     "ec2:Describe*",
                     "s3:ListBucket",
                     "rds:Describe*",
                     "cloudwatch:Describe*",
                     "logs:Describe*"
                 ]
-                Resource = "*"
+                Resource: "*"
             }
         ]
     })
@@ -147,35 +147,36 @@ resource "aws_iam_policy" "finance_policy" {
 # Permissions for Analysts group
 resource "aws_iam_policy" "analysts_policy" {
     name = "AnalystsPolicy"
-    Description = "Permission for Analysts: Read Only for S3 and DB"
+    description = "Permission for Analysts: Read Only for S3 and DB"
 
     policy = jsonencode({
+        Version = "2012-10-17",
         Statement = [
             {
                 Effect: "Allow",
-                Action = [
+                Action: [
                     "s3:ListBucket",
                     "s3:GetObject"
                 ],
-                Resource = "*"
+                Resource: "*"
             },
             {
                 Effect: "Allow",
-                Action = [
+                Action: [
                     "rds:DescribeDBInstances",
                     "rds:DescribeDBSnapshots",
                     "rds:ListTagsForResource",
                     "rds:DescribeDBClusterSnapshots",
                     "rds:DescribeDBClusters"
                 ],
-                Resource = "*"
+                Resource: "*"
             },
             {
                 Effect: "Allow",
-                Action = [
+                Action: [
                     "logs:GetLogEvents"
                 ],
-                Resource = "*"
+                Resource: "*"
             }
         ]
     })

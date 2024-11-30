@@ -9,9 +9,9 @@ resource "aws_iam_user" "developers" {
 }
 # Dynamically creating group memberships
 resource "aws_iam_group_membership" "developers_group" {
-    for_each = aws_iam_user.developers
-    user = each.value.name
-    groups = [aws_iam_group.developers_group.name]
+    name  = "developers-membership"
+    group = aws_iam_group.developers_group.name
+    users = [for user in aws_iam_user.developers : user.name] 
 }
 
 # Creating Operations users
@@ -23,9 +23,9 @@ resource "aws_iam_user" "operations" {
     name = each.value
 }
 resource "aws_iam_group_membership" "operations_group" {
-    for_each = aws_iam_user.operations
-    user = each.value.name
-    groups = [aws_iam_group.operations_group.name]
+    name = "operations-membership"
+    group = aws_iam_group.operations_group.name
+    users = [for user in aws_iam_user.operations : user.name]
 }
 
 # Finance
@@ -38,9 +38,9 @@ resource "aws_iam_user" "finance" {
 }
 
 resource "aws_iam_group_membership" "finance_group" {
-    for_each = aws_iam_user.finance
-    user = each.value.name
-    groups = [aws_iam_group.finance_group.name]
+    name = "finance-membership"
+    group = aws_iam_group.finance_group.name
+    users = [for user in aws_iam_user.finance : user.name]
 }
 
 # Analysts
@@ -53,7 +53,7 @@ resource "aws_iam_user" "analysts" {
 }
 
 resource "aws_iam_group_membership" "analysts_group" {
-    for_each = aws_iam_user.analysts
-    user = each.value.name
-    groups = [aws_iam_group.analysts_group.name]
+    name = "analysts-membership"
+    group = aws_iam_group.analysts_group.name
+    users = [for user in aws_iam_user.analysts : user.name]
 }
